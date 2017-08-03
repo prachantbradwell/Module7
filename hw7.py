@@ -1,11 +1,14 @@
+'''This is a public script using sortedcontainers.
+A dictioniary is created which allows for user input to print/add/remove/lookup users'''
 from sortedcontainers import SortedDict
+import sys
 #adding a comment here
 
 def print_menu():
     print('1. Print Users')
     print('2. Add a User')
     print('3. Remove a User')
-    print('4. Lookup a Phone Number')
+    print('4. Lookup a Username')
     print('5. Quit')
     print()
 
@@ -25,10 +28,14 @@ menu_choice = 0
 print_menu()
 
 # as long as the menu choice isn't "quit" get user options
+# if an invalid menu choice is added, exception handling will notify user that only numbers are acceptable for options
 while menu_choice != 5:
-    # get menu choice from user
-    menu_choice = int(input("Type in a number (1-5): "))
-
+    #exception handling
+    try:# get menu choice from user
+        menu_choice = int(input("Type in a number (1-5): "))
+    except ValueError:
+        print("Numbers Only")
+        sys.exit()
     # view current entries
     if menu_choice == 1:
         print("Current Users:")
@@ -47,16 +54,16 @@ while menu_choice != 5:
         print("Remove User")
         name = input("Name: ")
         if name in usernames:
-            pass  # delete that entry
+            usernames.pop(name)
 
     # view user name
     elif menu_choice == 4:
         print("Lookup User")
         name = input("Name: ")
         if name in usernames:
-            pass  # print the username
+            print("Their username is: {}".format(usernames[name])) # print the username
         else:
-            pass  # print username not found
+            print ("username not found")
 
     # is user enters something strange, show them the menu
     elif menu_choice != 5:
